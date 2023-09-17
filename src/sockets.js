@@ -3,6 +3,12 @@ module.exports = (io) => {
     let nickNames = [];
 
     io.on('connection', socket =>{
+
+        function actualizarUsuarios(){
+            io.sockets.emit('usernames', nickNames);
+        }
+
+        
         console.log('Nuevo usuario conectado');
 
         socket.on('enviar mensaje', (datos) =>{
@@ -38,9 +44,7 @@ module.exports = (io) => {
             }
         })
 
-        function actualizarUsuarios(){
-            io.sockets.emit('usernames', nickNames);
-        }
+    
     
     });
 
