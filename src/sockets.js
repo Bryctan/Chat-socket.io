@@ -6,7 +6,6 @@ module.exports = (io) => {
         console.log('Nuevo usuario conectado');
 
         socket.on('enviar mensaje', (datos) =>{
-            //console.log(datos);
             io.sockets.emit('nuevo mensaje', {
                 msg: datos,
                 username:socket.nickNames
@@ -22,8 +21,7 @@ module.exports = (io) => {
                 callback(true);
                 socket.nickNames = datos;
                 nickNames.push(socket.nickNames);
-
-                io.sockets.emit('nombre usuario', nickNames)
+                actualizarUsuarios();
             }
         });
 
@@ -36,9 +34,13 @@ module.exports = (io) => {
             }
             else {
                 nickNames.splice(nickNames.indexOf(socket.nickname), 1);
-                io.sockets.emit('nombre usuario', nickNames);
+                actualizarUsuarios();
             }
         })
+
+        function actualizarUsuarios(){
+            io.sockets.emit('usernames', nickNames);
+        }
     
     });
 

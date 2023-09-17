@@ -36,14 +36,12 @@ $(function(){
         socket.emit('nuevo usuario', nickName.val(), datos => {
             
         if (datos) {
-            console.log('entra2');
             nick = nickName.val();
             $('#nick-wrap').hide()
             $('#content-wrap').show()
         } 
         else 
         {
-        console.log('entra3');
         nickError.html(`<div class="alert alert-danger">El usuario ya existe o no puede ser vacio</div>`); 
         }
         nickName.val('')
