@@ -53,7 +53,6 @@ $(function(){
         let html = '';
         let color = '';
         let salir = '';
-        console.log(datos);
         for (let i = 0; i < datos.length; i++) {
             if(nick == datos[i]){
                 color = '#027f43';
@@ -66,8 +65,6 @@ $(function(){
             
         }
         userNames.html(html)
-
-
     });
 
     

@@ -4,9 +4,7 @@ module.exports = (io) => {
 
     io.on('connection', socket =>{
 
-        
-
-
+    
         console.log('Nuevo usuario conectado');
 
         socket.on('enviar mensaje', (datos) =>{
@@ -19,12 +17,12 @@ module.exports = (io) => {
 
         socket.on('nuevo usuario', (datos,callback) => {
     
-            if (nickNames.indexOf(datos) != -1 || datos == "") {
+            if(nickNames.indexOf(datos) != -1){
                 callback(false);
-            }else {
+            }else{
                 callback(true);
-                socket.nickNames = datos;
-                nickNames.push(socket.nickNames);
+                socket.nickname = datos;
+                nickNames.push(socket.nickname);
                 actualizarUsuarios();
             }
         });
@@ -32,8 +30,7 @@ module.exports = (io) => {
 
         socket.on('disconnect', datos => {
 
-            
-            if (!socket.nickNames) {
+            if (!socket.nickname) {
                 return;
             }
             else {
