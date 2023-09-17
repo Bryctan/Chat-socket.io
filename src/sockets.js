@@ -2,31 +2,28 @@ module.exports = (io) => {
 
     let nickNames = [];
 
-    io.on('connection', socket =>{
+    io.on('connection', socket => {
 
-    
         console.log('Nuevo usuario conectado');
 
-        socket.on('enviar mensaje', (datos) =>{
+        socket.on('enviar mensaje', (datos) => {
             io.sockets.emit('nuevo mensaje', {
                 msg: datos,
-                username:socket.nickNames
+                username: socket.nickNames
             });
         });
 
+        socket.on('nuevo usuario', (datos, callback) => {
 
-        socket.on('nuevo usuario', (datos,callback) => {
-    
-            if(nickNames.indexOf(datos) != -1){
+            if (nickNames.indexOf(datos) != -1 || datos == 0) {
                 callback(false);
-            }else{
+            } else {
                 callback(true);
                 socket.nickname = datos;
                 nickNames.push(socket.nickname);
                 actualizarUsuarios();
             }
         });
-
 
         socket.on('disconnect', datos => {
 
@@ -38,15 +35,13 @@ module.exports = (io) => {
                 actualizarUsuarios();
             }
         })
-
-        function actualizarUsuarios(){
+        function actualizarUsuarios() {
             io.sockets.emit('nombre usuario', nickNames);
         }
 
-    
     });
 
-    
+
 
 
 }
